@@ -29,6 +29,7 @@ CREATE TABLE USERS (
   user_password VARCHAR(255) NOT NULL COMMENT 'Contrasena del usuario, se debe almacenar hasheada para mayor seguridad (VARCHAR, Not null)',
   user_city VARCHAR(255) NOT NULL COMMENT 'Ciudad en la que se encuentra el usuario',
   user_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creación del usuario (DATE, Not null)',
+  user_status INT NOT NULL DEFAULT 1 COMMENT "Estado en el que se encuentra el usuario 0 = deshabilitado, 1 = activo",
   PRIMARY KEY (user_id),
   INDEX fk_rol_users_idx (rol_id ASC),
   UNIQUE INDEX users_id_UNIQUE (user_id ASC),
@@ -72,16 +73,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE OUTPUT_ORDERS (
   out_order_id INT NOT NULL AUTO_INCREMENT COMMENT 'Identificador autogenerado de las ordenes de salida (INT, Not null)',
-  out_order_date DATE NOT NULL COMMENT 'Fecha de creación de la orden de salida, se usa para manejar control de las salidas (DATE, Not null)',
-  product_details_id INT NOT NULL COMMENT 'Requerimientos del cliente\n.\nCampo que registra las solicitudes, condiciones especiales o instrucciones específicas dadas por el cliente en relación con el pedido o la entrega del producto. Puede incluir información como empaques personalizados, fechas de entrega, condiciones de transporte, etiquetado especial, entre otros. Ya que asegura que las necesidades del cliente sean consideradas en el proceso logístico.',
-  amount INT NOT NULL COMMENT 'Cantidad\n\nRepresenta la cantidad asociada a un producto, transacción o movimiento. Su significado puede variar según el contexto del sistema (por ejemplo, unidades de producto, valor monetario o volumen físico), por lo tanto, debe estar claramente definido en cada caso de uso. Este campo es obligatorio.',
-  PRIMARY KEY (out_order_id),
-  INDEX fk_output_orders_product_details_idx (product_details_id ASC),
-  CONSTRAINT fk_output_orders_product_details
-    FOREIGN KEY (product_details_id)
-    REFERENCES PRODUCT_DETAILS (product_details_id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+  out_order_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creación de la orden de salida, se usa para manejar control de las salidas (DATE, Not null)',
+  out_order_status INT NOT NULL DEFAULT 1 COMMENT "Estado en el que se encuentra la orden, 0 = Deshabilitada, 1 = Habilitada",
+  PRIMARY KEY (out_order_id)
+  )
 ENGINE = InnoDB;
 
 
@@ -132,7 +127,7 @@ CREATE TABLE INPUT_ORDERS (
   UNIQUE INDEX idINPUT_ORDER_UNIQUE (input_order_id ASC),
   INDEX fk_input_order_supplier_idx ( supplier_id ASC),
   CONSTRAINT fk_input_order_supplier
-    FOREIGN KEY ( supplier_id)
+    FOREIGN KEY (supplier_id)
     REFERENCES SUPPLIERS (supplier_id)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
@@ -176,7 +171,6 @@ CREATE TABLE PRODUCTS (
   product_id INT NOT NULL AUTO_INCREMENT COMMENT 'Identificador de cada producto, El cúal sirve para relacionar los productos con su respectivo serial (INT, Not Null, Auto Increment)',
   subcategory_id INT NOT NULL COMMENT 'Identificador de cada Subcategoria, Este campo sirve para relacionar los productos con las subcategorias y poder clasificarlos según el grupo que los agrupe (INT, Not null)',
   product_details_id INT NOT NULL COMMENT 'Identificador de detalles del producto\n.\nIdentificador único que referencia un conjunto específico de detalles asociados a un producto, como sus especificaciones técnicas, presentación, lote, ubicación, estado o características adicionales. Este campo es obligatorio para asegurar la trazabilidad y correcta asociación con los productos registrados.',
-  product_stock INT NOT NULL COMMENT 'Stock del producto.\nIndica la cantidad actual disponible de un producto en el inventario. Este valor se actualiza con cada entrada y salida de mercancía, y es fundamental para la gestión de existencias, control de inventario y toma de decisiones operativas. Es un campo obligatorio para evitar registros sin control de stock.',
   PRIMARY KEY (product_id),
   UNIQUE INDEX idPRODUCTS_UNIQUE (product_id ASC),
   INDEX fk_products_subcategory_idx (subcategory_id ASC),

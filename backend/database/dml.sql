@@ -6,37 +6,37 @@ INSERT INTO ROLES VALUES
 
 
 INSERT INTO USERS VALUES 
-(1, null, 'Albeiro', 'Ramos', 'Villalba','3001112223', 'profealbeiro2020@gmail.com', 'KR 12 NO 20-245', sha1('12345'), "Bogota", '2023-04-10'),
-(1, null, 'Juan', 'Pérez', 'García', '3004567890', 'juan.perez1@example.com', 'Calle 123 #45-67', sha1('hash_password_1'), "Bogota", '2025-08-20'),
-(2, null, 'María', 'López', 'Rodríguez', '3112345678', 'maria.lopez23@example.com', 'Carrera 10 #20-30', sha1('hash_password_2'), "Bogota", '2025-08-19'),
-(2, null, 'María', 'López', 'Rodríguez', '3112345678', 'maria.lopez23@example.com', 'Carrera 10 #20-30', sha1('hash_password_2'), "Bogota", '2025-08-19'),
-(2, null, 'Carlos', 'García', 'Moreno', '3101112233', 'carlos.garcia@example.com', 'Calle 45 #12-30', sha1('hash_password_18'), "Bogota", '2025-08-20'),
-(2, null, 'Andrea', 'López', 'Pérez', '3124445566', 'andrea.lopez@example.com', 'Carrera 20 #5-18', sha1('hash_password_19'), "Bogota", '2025-08-21'),
-(2, null, 'Felipe', 'Ramírez', 'Torres', '3157778899', 'felipe.ramirez@example.com', 'Av. Siempre Viva 742', sha1('hash_password_20'), "Bogota", '2025-08-22'),
-(2, null, 'Paola', 'Martínez', 'Guzmán', '3163334455', 'paola.martinez@example.com', 'Transv. 56 #34-90', sha1('hash_password_21'), "Bogota", '2025-08-23'),
-(2, null, 'Jorge', 'Hernández', 'Suárez', '3176667788', 'jorge.hernandez@example.com', 'Cl. 100 #45-12', sha1('hash_password_22'), "Bogota", '2025-08-24'),
-(3, null, 'Carlos', 'Ramírez', 'Torres', '3229876543', 'carlos.ramirez45@example.com', 'Av. Siempre Viva 742', sha1('hash_password_3'), "Bogota", '2025-08-18'),
-(3, null, 'Ana', 'Torres', 'Martínez', '3008765432', 'ana.torres12@example.com', 'Calle 50 #10-25', sha1('hash_password_4'), "Bogota", '2025-08-17'),
-(3, null, 'Diana', 'Morales', 'Rincón', '3189990011', 'diana.morales@example.com', 'Bodega Central Km 7', sha1('hash_password_23'), "Bogota", '2025-08-25'),
-(3, null, 'Ricardo', 'Suárez', 'Castaño', '3192223344', 'ricardo.suarez@example.com', 'Cl. 80 #10-55', sha1('hash_password_24'), "Bogota", '2025-08-26'),
-(3, null, 'Lucía', 'Fernández', 'Quintero', '3205556677', 'lucia.fernandez@example.com', 'Carrera 15 #8-44', sha1('hash_password_25'), "Bogota", '2025-08-27'),
-(3, null, 'Santiago', 'Rojas', 'Bedoya', '3218889900', 'santiago.rojas@example.com', 'Cl. 30 #22-18', sha1('hash_password_26'), "Bogota", '2025-08-28'),
-(3, null, 'Valentina', 'Cárdenas', 'Prieto', '3221112233', 'valentina.cardenas@example.com', 'Zona Industrial 4', sha1('hash_password_27'), "Bogota", '2025-08-29'),
-(4, null, 'Luis', 'Gómez', 'Fernández', '3127654321', 'luis.gomez33@example.com', 'Carrera 30 #15-22', sha1('hash_password_5'), "Bogota", '2025-08-16'),
-(4, null, 'Juan', 'Perez', 'Lopez', '3151234567', 'juanperez@gmail.com', 'Calle 50 #10-25', sha1('5678'), "Bogota", '1998-05-21'),
-(4, null, 'Ana', 'Gomez', ',Martinez', '3109876543', 'anagomez@yahoo.com', 'Calle 50 #10-25', sha1('1234'), "Bogota", '1995-12-10'),
-(4, null, 'Carlos', 'Ruiz', 'Garcia', '3123456789', 'carlosr@hotmail.com', 'Calle 50 #10-25', sha1('8765'), "Bogota", '2000-03-15'),
-(4, null, 'Laura', 'Jimenez', 'Rodriguez', '3198765432', 'laurajim@gmail.com', 'Calle 50 #10-25', sha1('4321'), "Bogota", '1999-07-30'),
-(4, null, 'Pedro', 'Torres', 'Castillo', '3134567890', 'pedrotorres@mail.com', 'Calle 50 #10-25', sha1('9876'), "Bogota", '2001-11-22'),
-(4, null, 'Sofia', 'Fernandez', 'Mendez', '3145678901', 'sofiaf@hotmail.com', 'Calle 50 #10-25', sha1('3456'), "Bogota", '1997-08-14'),
-(4, null, 'Luis', 'Alvarez', 'Ortiz', '3167890123', 'luisalvarez@gmail.com', 'Calle 50 #10-25', sha1('6543'), "Bogota", '1996-09-05'),
-(4, null, 'Martha', 'Vargas', 'Ramos', '3178901234', 'marthav@yahoo.com', 'Calle 50 #10-25', sha1('7890'), "Bogota", '2003-02-17'),
-(4, null, 'Andres', 'Castro', 'Morales', '3189012345', 'andrescastro@mail.com', 'Calle 50 #10-25', sha1('2345'), "Bogota", '1994-06-09'),
-(4, null, 'Veronica', 'Medina', 'Salazar', '3190123456', 'veronicam@gmail.com', 'Calle 50 #10-25', sha1('6789'), "Bogota", '1993-04-25'),
-(4, null, 'Javier', 'Sanchez', 'Hernandez', '3101234567', 'javiers@yahoo.com', 'Calle 50 #10-25', sha1('3456'), "Bogota", '2002-01-13'),
-(4, null, 'Laura', 'Diaz', 'Vazquez', '3112345678', 'lauradiaz@gmail.com', 'Calle 50 #10-25', sha1('5678'), "Bogota", '1995-10-02'),
-(4, null, 'Miguel', 'Rojas', 'Castro', '3123456789', 'miguelr@mail.com', 'Calle 50 #10-25', sha1('4321'), "Bogota", '1998-03-27'),
-(4, null, 'Elena', 'Martinez', 'Sosa', '3134567890', 'elenam@hotmail.com', 'Calle 50 #10-25', sha1('1234'), "Bogota", '2000-12-19');
+(1, null, 'Albeiro', 'Ramos', 'Villalba','3001112223', 'profealbeiro2020@gmail.com', 'KR 12 NO 20-245', sha1('12345'), "Bogota", '2025-04-10', 1),
+(1, null, 'Juan', 'Pérez', 'García', '3004567890', 'juan.perez1@example.com', 'Calle 123 #45-67', sha1('hash_password_1'), "Bogota", '2025-06-20', 1),
+(2, null, 'María', 'López', 'Rodríguez', '3112345678', 'maria.lopez23@example.com', 'Carrera 10 #20-30', sha1('hash_password_2'), "Bogota", '2025-12-19', 1),
+(2, null, 'María', 'López', 'Rodríguez', '3112345678', 'maria.lopez23@example.com', 'Carrera 10 #20-30', sha1('hash_password_2'), "Bogota", '2025-12-19', 1),
+(2, null, 'Carlos', 'García', 'Moreno', '3101112233', 'carlos.garcia@example.com', 'Calle 45 #12-30', sha1('hash_password_18'), "Bogota", '2025-06-20', 1),
+(2, null, 'Andrea', 'López', 'Pérez', '3124445566', 'andrea.lopez@example.com', 'Carrera 20 #5-18', sha1('hash_password_19'), "Bogota", '2025-06-21', 1),
+(2, null, 'Felipe', 'Ramírez', 'Torres', '3157778899', 'felipe.ramirez@example.com', 'Av. Siempre Viva 742', sha1('hash_password_20'), "Bogota", '2025-07-22', 1),
+(2, null, 'Paola', 'Martínez', 'Guzmán', '3163334455', 'paola.martinez@example.com', 'Transv. 56 #34-90', sha1('hash_password_21'), "Bogota", '2025-07-23', 1),
+(2, null, 'Jorge', 'Hernández', 'Suárez', '3176667788', 'jorge.hernandez@example.com', 'Cl. 100 #45-12', sha1('hash_password_22'), "Bogota", '2025-07-24', 1),
+(3, null, 'Carlos', 'Ramírez', 'Torres', '3229876543', 'carlos.ramirez45@example.com', 'Av. Siempre Viva 742', sha1('hash_password_3'), "Bogota", '2025-12-18', 1),
+(3, null, 'Ana', 'Torres', 'Martínez', '3012765432', 'ana.torres12@example.com', 'Calle 50 #10-25', sha1('hash_password_4'), "Bogota", '2025-12-17', 1),
+(3, null, 'Diana', 'Morales', 'Rincón', '3189990011', 'diana.morales@example.com', 'Bodega Central Km 7', sha1('hash_password_23'), "Bogota", '2025-12-25', 1),
+(3, null, 'Ricardo', 'Suárez', 'Castaño', '3192223344', 'ricardo.suarez@example.com', 'Cl. 80 #10-55', sha1('hash_password_24'), "Bogota", '2025-08-26', 1),
+(3, null, 'Lucía', 'Fernández', 'Quintero', '3205556677', 'lucia.fernandez@example.com', 'Carrera 15 #8-44', sha1('hash_password_25'), "Bogota", '2025-08-27', 1),
+(3, null, 'Santiago', 'Rojas', 'Bedoya', '3218889900', 'santiago.rojas@example.com', 'Cl. 30 #22-18', sha1('hash_password_26'), "Bogota", '2025-08-28', 1),
+(3, null, 'Valentina', 'Cárdenas', 'Prieto', '3221112233', 'valentina.cardenas@example.com', 'Zona Industrial 4', sha1('hash_password_27'), "Bogota", '2025-08-29', 1),
+(4, null, 'Luis', 'Gómez', 'Fernández', '3127654321', 'luis.gomez33@example.com', 'Carrera 30 #15-22', sha1('hash_password_5'), "Bogota", '2025-08-16', 1),
+(4, null, 'Juan', 'Perez', 'Lopez', '3151234567', 'juanperez@gmail.com', 'Calle 50 #10-25', sha1('5678'), "Bogota", '2025-05-21', 1),
+(4, null, 'Ana', 'Gomez', ',Martinez', '3109876543', 'anagomez@yahoo.com', 'Calle 50 #10-25', sha1('1234'), "Bogota", '2025-12-10', 1),
+(4, null, 'Carlos', 'Ruiz', 'Garcia', '3123456789', 'carlosr@hotmail.com', 'Calle 50 #10-25', sha1('8765'), "Bogota", '2025-03-15', 1),
+(4, null, 'Laura', 'Jimenez', 'Rodriguez', '3198765432', 'laurajim@gmail.com', 'Calle 50 #10-25', sha1('4321'), "Bogota", '2025-07-30', 1),
+(4, null, 'Pedro', 'Torres', 'Castillo', '3134567890', 'pedrotorres@mail.com', 'Calle 50 #10-25', sha1('9876'), "Bogota", '2025-11-22', 1),
+(4, null, 'Sofia', 'Fernandez', 'Mendez', '3145678901', 'sofiaf@hotmail.com', 'Calle 50 #10-25', sha1('3456'), "Bogota", '2025-08-14', 1),
+(4, null, 'Luis', 'Alvarez', 'Ortiz', '3167890123', 'luisalvarez@gmail.com', 'Calle 50 #10-25', sha1('6543'), "Bogota", '2025-09-05', 1),
+(4, null, 'Martha', 'Vargas', 'Ramos', '3178901234', 'marthav@yahoo.com', 'Calle 50 #10-25', sha1('7890'), "Bogota", '2025-02-17', 1),
+(4, null, 'Andres', 'Castro', 'Morales', '3189012345', 'andrescastro@mail.com', 'Calle 50 #10-25', sha1('2345'), "Bogota", '2025-06-09', 1),
+(4, null, 'Veronica', 'Medina', 'Salazar', '3190123456', 'veronicam@gmail.com', 'Calle 50 #10-25', sha1('6789'), "Bogota", '2025-04-25', 1),
+(4, null, 'Javier', 'Sanchez', 'Hernandez', '3101234567', 'javiers@yahoo.com', 'Calle 50 #10-25', sha1('3456'), "Bogota", '2025-01-13', 1),
+(4, null, 'Laura', 'Diaz', 'Vazquez', '3112345678', 'lauradiaz@gmail.com', 'Calle 50 #10-25', sha1('5678'), "Bogota", '2025-10-02', 1),
+(4, null, 'Miguel', 'Rojas', 'Castro', '3123456789', 'miguelr@mail.com', 'Calle 50 #10-25', sha1('4321'), "Bogota", '2025-03-27', 1),
+(4, null, 'Elena', 'Martinez', 'Sosa', '3134567890', 'elenam@hotmail.com', 'Calle 50 #10-25', sha1('1234'), "Bogota", '2025-12-19', 1);
 
 
 INSERT INTO CATEGORIES VALUES 
@@ -163,38 +163,38 @@ INSERT INTO PRODUCT_DETAILS VALUES
 
 
 INSERT INTO PRODUCTS VALUES 
-(null, 15, 1, 35),    -- HP 110 .
-(null, 15, 2, 50),    -- Zebra ZD420 
-(null, 15, 3, 35),    -- Epson TM-T20 
-(null, 12, 4, 40),    -- Epson L3150 
-(null, 12, 5, 33),    -- Canon G2010 
-(null, 12, 6, 45),    -- HP Ink Tank 415 
-(null, 13, 7, 20),    -- LaserJet Pro 
-(null, 13, 8, 18),    -- Brother HL 
-(null, 13, 9, 25),    -- Samsung Xpress 
-(null, 7, 10, 15),    -- QLED Samsung
-(null, 6, 11, 35),    -- Bravia Sony 
-(null, 5, 12, 14),    -- LG LED 
-(null, 6, 13, 11),    -- LG OLED 
-(null, 37, 14, 50),   -- WD My Passport 
-(null, 31, 15, 40),   -- Logitech MX Keys 
-(null, 32, 16, 50),   -- Razer DeathAdder 
-(null, 33, 17, 35),   -- HyperX Cloud II 
-(null, 34, 18, 20),   -- TP-Link Router 
-(null, 35, 19, 15),   -- Cisco Switch 
-(null, 36, 20, 100),  -- Cables Cat6 
-(null, 1, 21, 30),    -- Lenovo ThinkPad 
-(null, 1, 22, 25),    -- Asus ROG Strix 
-(null, 1, 23, 15),    -- MacBook Pro 
-(null, 4, 24, 18),    -- LG NanoCell TV
-(null, 38, 25, 40),   -- Kioxia SSD
-(null, 40, 26, 50),   -- Kingston RAM
-(null, 41, 27, 30),   -- Crucial DDR5
-(null, 32, 28, 35),   -- Logitech G Pro X
-(null, 32, 29, 25),   -- Razer Viper Ultimate
-(null, 33, 30, 28),   -- HyperX Alpha Wireless
-(null, 34, 31, 20),   -- TP-Link Deco Mesh
-(null, 35, 32, 10);   -- Cisco Catalyst
+(null, 15, 1),    -- HP 110 .
+(null, 15, 2),    -- Zebra ZD420 
+(null, 15, 3),    -- Epson TM-T20 
+(null, 12, 4),    -- Epson L3150 
+(null, 12, 5),    -- Canon G2010 
+(null, 12, 6),    -- HP Ink Tank 415 
+(null, 13, 7),    -- LaserJet Pro 
+(null, 13, 8),    -- Brother HL 
+(null, 13, 9),    -- Samsung Xpress 
+(null, 7, 10),    -- QLED Samsung
+(null, 6, 11),    -- Bravia Sony 
+(null, 5, 12),    -- LG LED 
+(null, 6, 13),    -- LG OLED 
+(null, 37, 14),   -- WD My Passport 
+(null, 31, 15),   -- Logitech MX Keys 
+(null, 32, 16),   -- Razer DeathAdder 
+(null, 33, 17),   -- HyperX Cloud II 
+(null, 34, 18),   -- TP-Link Router 
+(null, 35, 19),   -- Cisco Switch 
+(null, 36, 20),  -- Cables Cat6 
+(null, 1, 21),    -- Lenovo ThinkPad 
+(null, 1, 22),    -- Asus ROG Strix 
+(null, 1, 23),    -- MacBook Pro 
+(null, 4, 24),    -- LG NanoCell TV
+(null, 38, 25),   -- Kioxia SSD
+(null, 40, 26),   -- Kingston RAM
+(null, 41, 27),   -- Crucial DDR5
+(null, 32, 28),   -- Logitech G Pro X
+(null, 32, 29),   -- Razer Viper Ultimate
+(null, 33, 30),   -- HyperX Alpha Wireless
+(null, 34, 31),   -- TP-Link Deco Mesh
+(null, 35, 32);   -- Cisco Catalyst
 
 
 INSERT INTO SUPPLIERS VALUES
@@ -287,21 +287,21 @@ INSERT INTO PRODUCT_SERIALS VALUES
 
 
 INSERT INTO OUTPUT_ORDERS VALUES
-(null, '2025-03-24', 1, 3),
-(null, '2025-05-22', 2, 4),
-(null, '2025-01-10', 3, 5),
-(null, '2025-07-15', 1, 6),
-(null, '2025-09-30', 2, 7),
-(null, '2025-04-18', 2, 8),
-(null, '2025-08-21', 3, 9),
-(null, '2025-06-12', 5, 10),
-(null, '2025-02-28', 7, 11),
-(null, '2025-11-05', 8, 12),
-(null, '2025-12-12', 1, 13),
-(null, '2025-10-09', 2, 14),
-(null, '2025-03-01', 7, 15),
-(null, '2025-05-15', 8, 16),
-(null, '2025-07-07', 9, 17);    
+(null, '2025-03-24', 1),
+(null, '2025-05-22', 1),
+(null, '2025-01-10', 1),
+(null, '2025-07-15', 1),
+(null, '2025-09-30', 1),
+(null, '2025-04-18', 1),
+(null, '2025-08-21', 1),
+(null, '2025-06-12', 0),
+(null, '2025-02-28', 1),
+(null, '2025-11-05', 0),
+(null, '2025-12-12', 1),
+(null, '2025-10-09', 1),
+(null, '2025-03-01', 1),
+(null, '2025-05-15', 1),
+(null, '2025-07-07', 1);    
 
 
 INSERT INTO CUSTOMERS VALUES

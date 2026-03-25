@@ -22,6 +22,7 @@ SELECT
     io.input_order_date,
     io.input_order_bill,
     c.category_name,
+    sc.subcategory_id,
     sc.subcategory_name,
     p.product_id,
     s.supplier_name,
@@ -30,7 +31,6 @@ SELECT
     pd.product_details_id,
     pd.product_detail_description,
     pb.product_brand_name,
-    p.product_stock,
     ps.product_garanty_input
     FROM SUPPLIERS AS s
     INNER JOIN INPUT_ORDERS AS io
@@ -100,6 +100,7 @@ CREATE VIEW get_output_products AS
     SELECT
     oo.out_order_id,
     oo.out_order_date,
+    oo.out_order_status,
     od.output_details_id,
     od.product_serial,
     od.out_product_garanty,
@@ -118,5 +119,63 @@ CREATE VIEW get_output_products AS
     ON p.product_details_id = pd.product_details_id
     INNER JOIN PRODUCT_BRANDS AS pb
     ON pd.product_brand_id = pb.product_brand_id;
+    
+CREATE VIEW get_all_products_with_stock AS
+SELECT 
+    v.*,
+    IFNULL(stock.stock, 0) AS stock
+FROM get_all_products v
+LEFT JOIN (
+    SELECT 
+        p.product_id,
+        COUNT(ps.product_serial) AS stock
+    FROM PRODUCTS p
+    LEFT JOIN PRODUCT_SERIALS ps 
+        ON ps.product_id = p.product_id
+    GROUP BY p.product_id
+) AS stock
+ON v.product_id = stock.product_id;
 
-    select * from get_output_products;
+USE DB_TRACKLINKER;
+-- Vista para obtener todos los productos con sus categorias y subcategorias
+CREATE VIEW get_all_products_null AS
+SELECT
+    io.input_order_id,
+    io.input_order_date,
+    io.input_order_bill,
+    c.category_name,
+    sc.subcategory_name,
+    p.product_id,
+    s.supplier_name,
+    ps.product_serial,
+    pd.product_detail_model,
+    pd.product_details_id,
+    pd.product_detail_description,
+    pb.product_brand_name,
+    ps.product_garanty_input
+    FROM SUPPLIERS AS s
+    LEFT JOIN INPUT_ORDERS AS io
+    ON s.supplier_id = io.supplier_id
+    LEFT JOIN PRODUCT_SERIALS AS ps
+    ON io.input_order_id = ps.input_order_id
+    LEFT JOIN PRODUCTS as p
+    ON ps.product_id = p.product_id
+    LEFT JOIN SUBCATEGORIES AS sc
+    ON p.subcategory_id = sc.subcategory_id
+    LEFT JOIN CATEGORIES AS c
+    ON sc.category_id = c.category_id
+    LEFT JOIN PRODUCT_DETAILS AS pd
+    ON p.product_details_id = pd.product_details_id
+    LEFT JOIN PRODUCT_BRANDS AS pb
+    ON pd.product_brand_id = pb.product_brand_id
+    ORDER BY p.product_id;
+    
+SELECT * FROM get_output_products;
+
+ SELECT 
+            product_brand_name AS brand,
+            SUM(stock) AS products
+        FROM get_all_products_with_stock
+        GROUP BY product_brand_name
+        ORDER BY products DESC
+        LIMIT 7;
