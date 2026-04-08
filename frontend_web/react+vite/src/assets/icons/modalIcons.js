@@ -9,6 +9,8 @@ import menIcon from "./modal/men-icon.svg";
 import whiteCircle from "./modal/white-circle.svg";
 import blackCircle from "./modal/black-circle.svg";
 import languageIcon from "./modal/language-icon.svg";
+import emailSentIcon from "./modal/email-sent-icon.svg";
+import arrowUp from "./modal/arrow-up.svg";
 
 export const modalIcons = {
   errorWithFillIcon,
@@ -22,4 +24,6 @@ export const modalIcons = {
   whiteCircle,
   blackCircle,
   languageIcon,
+  emailSentIcon,
+  arrowUp,
 };

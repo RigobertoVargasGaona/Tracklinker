@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from app.controllers.user_controller import UserController
 from fastapi import Depends
-from app.models.user_model import User
+from app.models.user_model import User, UpdateUser
 from app.middlewares.roles_middleware import require_roles
 
 router = APIRouter(
@@ -16,7 +16,7 @@ def get_all_roles():
 
 # Endpoint para obtener todos los usuarios
 @router.get("/")
-def get_all_users(payload: dict = Depends(require_roles(["Admin"]))):
+def get_all_users():
     return UserController.get_all_users()
 
 # Endpoint para obtener un usuario mediante el id
@@ -26,24 +26,29 @@ def get_user_by_id(user_id: int):
 
 # Endpoint para crear o registrar un usuario
 @router.post("/create")
-def create_user(
-    user_data: User, 
-    payload: dict = Depends(require_roles(["Admin"]))
+async def create_user(
+    user_data: User
 ):
-    return UserController.create_user(user_data)
+    return await UserController.create_user(user_data)
 
 # Endpoint para actualizar la información de un usuario existente mediante su id
 @router.put("/update/{user_id}")
 def update_user(
     user_id: int, 
-    user_data: dict
+    user_data: UpdateUser
 ):
     return UserController.update_user(user_id, user_data)
 
-# Endpoint para eliminar un usuario mediante su id
-@router.delete("/delete/{user_id}")
-def delete_user(
-    user_id: int,
-    payload: dict = Depends(require_roles(["Admin"]))
+# Endpoint para deshabilitar un usuario mediante su id
+@router.put("/disable/{user_id}")
+def disable_user(
+    user_id: int
 ):
-    return UserController.delete_user(user_id)
+    return UserController.disable_user(user_id)
+
+# Endpoint para habilitar un usuario mediante su id
+@router.put("/enable/{user_id}")
+def enable_user(
+    user_id: int
+):
+    return UserController.enable_user(user_id)

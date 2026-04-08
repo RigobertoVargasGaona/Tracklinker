@@ -5,11 +5,12 @@ import { useSubcategories } from "./hooks/useSubcategories";
 import { actionsIcons } from "../../assets/icons/mainIcons";
 // Modales
 import Modal from "../../globals/components/modals/Modal";
+import HelpModal from "../../globals/components/modals/HelpModal";
 import FilterModal from "../../globals/components/modals/FilterModal";
-import ProfileModal from "../../globals/components/modals/ProfileModal";
 import AddSubcategoryModal from "./components/modals/AddSubcategoryModal";
 import EditSubcategoryModal from "./components/modals/EditSubcategoryModal";
 import DeleteSubcategoryModal from "./components/modals/DeleteSubcategoryModal";
+import ProfileModal from "../../globals/components/modals/profileModal/ProfileModal";
 // Componentes
 import Layout from "../../globals/components/Layout/Layout";
 import TopSection from "../../globals/components/ui/TopSection";
@@ -22,7 +23,12 @@ export default function SubcategoriesPage() {
   const { modalType, isOpen, modalData, openModal, closeModal } = useModal();
 
   return (
-    <Layout avatarOnClick={() => openModal(null, "user")}>
+    <Layout
+      avatarOnClick={() => openModal(null, "user")}
+      helpOnClick={() => {
+        openModal(null, "help");
+      }}
+    >
       <TopSection
         sectionName={"Subcategorias"}
         addButtonIcon={actionsIcons.addIcon}
@@ -52,18 +58,19 @@ export default function SubcategoriesPage() {
                     ? "Información de la subcategoría"
                     : modalType === "edit"
                       ? "Editar Subcategoria"
-                      : "Eliminar Subcategoria"
+                      : modalType === "delete"
+                        ? "Eliminar Subcategoria"
+                        : "Ayuda"
           }
           type={modalType}
           isOpen={isOpen}
           onClose={() => closeModal()}
         >
-          {modalType === "user" && (
-            <ProfileModal onClose={() => closeModal()} />
-          )}
+          {modalType === "user" && <ProfileModal />}
           {modalType === "filter" && (
             <FilterModal onClose={() => closeModal()}></FilterModal>
           )}
+          {modalType === "help" && <HelpModal onClose={() => closeModal()} />}
           {/* Modal para agregar una subcategoria */}
           {modalType === "add" && (
             <AddSubcategoryModal onClose={() => closeModal()} />

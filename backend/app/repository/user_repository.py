@@ -1,6 +1,5 @@
 from app.core.database import get_connection
-from app.models.user_model import User
-from datetime import datetime
+from app.models.user_model import User, UpdateUser, UpdateCurrentUser
 from app.utils.date_formatter import date_formatter
 import bcrypt
 
@@ -26,7 +25,8 @@ class UserRepository:
             u.user_email,
             u.user_address,
             u.user_city,
-            u.user_date
+            u.user_date,
+            u.user_status
         FROM USERS AS u 
         INNER JOIN ROLES AS r 
         ON u.rol_id = r.rol_id
@@ -48,6 +48,7 @@ class UserRepository:
                     "address": item["user_address"],
                     "city": item["user_city"],
                     "date": date_formatter(item["user_date"]),
+                    "status": item["user_status"]
                 }
                 for item in results
             ]
@@ -67,26 +68,39 @@ class UserRepository:
         # Petición a la base de datos
         query = """
         SELECT
-            r.rol_name,
-            u.user_id,
-            u.user_name,
-            u.user_first_surname,
-            u.user_second_surname,
-            u.user_phone,
-            u.user_email,
-            u.user_address,
-            u.user_city,
-            u.user_date
-        FROM USERS AS u 
-        INNER JOIN ROLES AS r 
-        ON u.rol_id = r.rol_id
+            user_name,
+            user_first_surname,
+            user_second_surname,
+            user_password,
+            user_phone,
+            user_email,
+            user_address,
+            user_city
+        FROM USERS
         WHERE user_id = %s
         """
 
         try:
             cursor.execute(query, (user_id,))
             result = cursor.fetchall()
-            return None, result
+
+            if not result:
+                return "Usuario no encontrado", None
+
+            data = [
+                {
+                    "name": item["user_name"],
+                    "first_surname": item["user_first_surname"],
+                    "second_surname": item["user_second_surname"],
+                    "user_password": item["user_password"],
+                    "phone": item["user_phone"],
+                    "email": item["user_email"],
+                    "address": item["user_address"],
+                    "city": item["user_city"]
+                }
+                for item in result
+            ]
+            return None, data
         except Exception as e:
             return f"Error al ejecutar la consulta: {e}", None
         finally:
@@ -127,8 +141,7 @@ class UserRepository:
 
     # Crear un usuario
     @staticmethod
-    def create(user_data: User):
-
+    def create(user_data: User, temporal_password: str):
         data = user_data.model_dump()
 
         connection = get_connection()
@@ -143,8 +156,8 @@ class UserRepository:
             return None, False, "El correo ya está registrado"
 
         # Hashear la contraseña
-        password = data["password"].encode("utf-8")
-        data["password"] = bcrypt.hashpw(
+        password = temporal_password.encode("utf-8")
+        hash_password = bcrypt.hashpw(
             password, bcrypt.gensalt(rounds=12)).decode("utf-8")
 
         # Petición a la base de datos
@@ -168,7 +181,7 @@ class UserRepository:
                 data["second_surname"], 
                 data["address"], 
                 data["city"], 
-                data["password"], 
+                hash_password,
                 data["email"], 
                 data["phone"]))
             connection.commit()
@@ -181,7 +194,8 @@ class UserRepository:
 
     # Actualizar la información de un usuario
     @staticmethod
-    def update(user_id: int, user_data: dict):
+    def update(user_id: int, user_data: UpdateUser):
+        data = user_data.model_dump()
 
         connection = get_connection()
         cursor = connection.cursor(dictionary=True)
@@ -198,30 +212,39 @@ class UserRepository:
             
         # Verificar si existe el correo y no duplicarlo
         if "user_email" in user_data:
-            print(user_data["user_email"])
             cursor.execute("SELECT user_id FROM USERS WHERE user_email = %s", (user_data["user_email"],))
-            if cursor.fetchone():
+            existing = cursor.fetchone()
+            
+            if existing and existing["user_id"] != user_id:
                 cursor.close()
                 connection.close()
                 return None, False, "El correo ya está registrado"
-        
-        if "user_password" in user_data:
-            # Hashear la nueva contraseña
-            password = user_data["user_password"].encode("utf-8")
-            user_data["user_password"] = bcrypt.hashpw(
-                password, bcrypt.gensalt()).decode("utf-8")
 
-        # Campos vacios para almacenar todo lo que va a actualizar
-        fields = list(user_data.keys())
-        values = list(user_data.values())
 
-        set_clause = ",".join([f"{field} = %s" for field in fields])
-        values.append(user_id)
-
-        query = f"UPDATE USERS SET {set_clause} WHERE user_id = %s"
+        query = """
+        UPDATE USERS SET
+            user_name = %s,
+            user_first_surname = %s,
+            user_second_surname = %s,
+            user_email = %s,
+            user_phone = %s,
+            user_city = %s,
+            user_address = %s,
+            user_status= %s
+        WHERE user_id = %s"""
 
         try:
-            cursor.execute(query, values)
+            cursor.execute(query, (
+                data["name"], 
+                data["first_surname"], 
+                data["second_surname"], 
+                data["email"], 
+                data["phone"],
+                data["address"], 
+                data["city"],
+                data["status"],
+                user_id 
+            ))
             connection.commit()
 
             return None, True, "Usuario actualizado correctamente"
@@ -232,9 +255,96 @@ class UserRepository:
             cursor.close()
             connection.close()
 
-    # Eliminar un usuario
+
+    # Actualizar la información de un usuario
     @staticmethod
-    def delete(user_id: int):
+    def update_current_user(user_id: int, user_data: UpdateCurrentUser):
+        data = user_data.model_dump()
+
+        connection = get_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        # Verificar si existe el usuario
+        cursor.execute("SELECT * FROM USERS WHERE user_id = %s", (user_id,))
+        user = cursor.fetchone()
+
+        if not user:
+            cursor.close()
+            connection.close()
+            return "Usuario no encontrado", None, None
+            
+        # Verificar si existe el correo y no duplicarlo
+        if "user_email" in user_data:
+            cursor.execute("SELECT user_id FROM USERS WHERE user_email = %s", (user_data["user_email"],))
+            existing = cursor.fetchone()
+            
+            if existing and existing["user_id"] != user_id:
+                cursor.close()
+                connection.close()
+                return None, False, "El correo ya está registrado"
+
+        query = """
+        UPDATE USERS SET
+            user_name = %s,
+            user_first_surname = %s,
+            user_second_surname = %s,
+            user_email = %s,
+            user_phone = %s,
+            user_city = %s,
+            user_address = %s
+        WHERE user_id = %s"""
+
+        try:
+            cursor.execute(query, (
+                data["name"], 
+                data["first_surname"], 
+                data["second_surname"], 
+                data["email"], 
+                data["phone"],
+                data["address"], 
+                data["city"],
+                user_id 
+            ))
+            connection.commit()
+
+            return None, True, "Usuario actualizado correctamente"
+        except Exception as e:
+            connection.rollback()
+            return f"Error al ejecutar la consulta", False, None
+        finally:
+            cursor.close()
+            connection.close()
+
+    @staticmethod
+    def update_password(user_id: int, password: str):
+
+        connection = get_connection()
+        cursor = connection.cursor()
+
+        query = """
+        UPDATE USERS SET
+            user_password = %s
+        WHERE user_id = %s
+        """
+        new_password = password.encode("utf-8")
+        hash_password = bcrypt.hashpw(new_password, bcrypt.gensalt(rounds=12)).decode("utf-8")
+
+        try:
+            cursor.execute(query, (hash_password, user_id))
+
+            connection.commit()
+
+            return None, True, "Contraseña actualizada correctamente"
+        except Exception:
+            connection.rollback()
+            return f"Error al actualizar la contraseña", False, None
+        finally:
+            cursor.close()
+            connection.close()
+
+    # Deshabilitar un usuario
+    @staticmethod
+    def disable(user_id: int):
         connection = get_connection()
         cursor = connection.cursor()
 
@@ -245,14 +355,39 @@ class UserRepository:
             connection.close()
             return "Usuario no encontrado", False, None
 
-        query = "DELETE FROM USERS WHERE user_id = %s"
+        query = "UPDATE USERS SET user_status = 0 WHERE user_id = %s"
 
         try:
             cursor.execute(query, (user_id,))
             connection.commit()
-            return None, True, "Usuario eliminado correctamente"
-        except Exception as e:
-            return f"Error la intentar ejecutar la consulta {e}", False, None
+            return None, True, "Usuario deshabilitado correctamente"
+        except Exception:
+            return "Error la intentar deshabilitar el usuario", False, None
+        finally:
+            cursor.close()
+            connection.close()
+
+    # Habilitar un usuario
+    @staticmethod
+    def enable(user_id: int):
+        connection = get_connection()
+        cursor = connection.cursor()
+
+        cursor.execute("SELECT * FROM USERS WHERE user_id = %s", (user_id,))
+        user = cursor.fetchone()
+        if not user:
+            cursor.close()
+            connection.close()
+            return "Usuario no encontrado", False, None
+
+        query = "UPDATE USERS SET user_status = 1 WHERE user_id = %s"
+
+        try:
+            cursor.execute(query, (user_id,))
+            connection.commit()
+            return None, True, "Usuario habilitado correctamente"
+        except Exception:
+            return "Error la intentar habilitar el usuario", False, None
         finally:
             cursor.close()
             connection.close()

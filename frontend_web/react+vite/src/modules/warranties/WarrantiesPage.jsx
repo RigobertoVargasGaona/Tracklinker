@@ -9,12 +9,13 @@ import TopSection from "../../globals/components/ui/TopSection";
 import WarrantiesTable from "./components/ui/WarrantiesTable";
 // Modales
 import Modal from "../../globals/components/modals/Modal";
-import FilterModal from "../../globals/components/modals/FilterModal";
-import ProfileModal from "../../globals/components/modals/ProfileModal";
+import HelpModal from "../../globals/components/modals/HelpModal";
+import MoreWarrantyInfo from "./components/modals/MoreWarrantyInfo";
 import AddWarrantyModal from "./components/modals/AddWarrantyModal";
 import EditWarrantyModal from "./components/modals/EditWarrantyModal";
+import FilterModal from "../../globals/components/modals/FilterModal";
 import DeleteWarrantyModal from "./components/modals/DeleteWarrantyModal";
-import MoreWarrantyInfo from "./components/modals/MoreWarrantyInfo";
+import ProfileModal from "../../globals/components/modals/profileModal/ProfileModal";
 
 export default function WarrantiesPage() {
   const { isOpen, modalData, modalType, refetch, openModal, closeModal } =
@@ -22,7 +23,12 @@ export default function WarrantiesPage() {
   const { warranties, fetchWarranties } = useWarranties();
 
   return (
-    <Layout avatarOnClick={() => openModal(null, "user")}>
+    <Layout
+      avatarOnClick={() => openModal(null, "user")}
+      helpOnClick={() => {
+        openModal(null, "help");
+      }}
+    >
       <TopSection
         sectionName={"Garantías"}
         addButtonIcon={warrantiesIcons.addWarrantyIcon}
@@ -48,16 +54,19 @@ export default function WarrantiesPage() {
                   ? "Agregar Garantía"
                   : modalType === "info"
                     ? "Más Información"
-                    : modalType === "delete"
-                      ? "¿Eliminar Garantía?"
-                      : "Editar Garantía"
+                    : modalType === "edit"
+                      ? "Editar Garantía"
+                      : modalType === "delete"
+                        ? "Eliminar Proveedor"
+                        : "Ayuda"
           }
           type={modalType}
           isOpen={isOpen}
           onClose={closeModal}
         >
-          {modalType === "user" && <ProfileModal onClose={closeModal} />}
+          {modalType === "user" && <ProfileModal />}
           {modalType === "filter" && <FilterModal onClose={closeModal} />}
+          {modalType === "help" && <HelpModal onClose={() => closeModal()} />}
           {modalType === "add" && (
             <AddWarrantyModal
               onCloseModal={closeModal}

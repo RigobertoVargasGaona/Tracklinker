@@ -6,14 +6,20 @@ import Layout from "../../globals/components/Layout/Layout";
 import SectionsContainer from "./components/ui/SectionsContainer";
 // Modals
 import Modal from "../../globals/components/modals/Modal";
-import ProfileModal from "../../globals/components/modals/ProfileModal";
+import HelpModal from "../../globals/components/modals/HelpModal";
+import ProfileModal from "../../globals/components/modals/profileModal/ProfileModal";
 
 export default function HomePage() {
   const { modalType, isOpen, openModal, closeModal } = useModal();
-  const { user } = useUser()
+  const { user } = useUser();
 
   return (
-    <Layout avatarOnClick={() => openModal(null, "user")}>
+    <Layout
+      avatarOnClick={() => openModal(null, "user")}
+      helpOnClick={() => {
+        openModal(null, "help");
+      }}
+    >
       <h1 className="h-[10%] p-5 text-5xl font-medium dark:text-white">
         Bienvenido, {user.name}
       </h1>
@@ -22,14 +28,13 @@ export default function HomePage() {
 
       {modalType && (
         <Modal
-          title={modalType === "user" ? "Configuración" : ""}
+          title={modalType === "user" ? "Configuración" : "Ayuda"}
           type={modalType}
           isOpen={isOpen}
           onClose={() => closeModal()}
         >
-          {modalType === "user" && (
-            <ProfileModal onClose={() => closeModal()} />
-          )}
+          {modalType === "user" && <ProfileModal />}
+          {modalType === "help" && <HelpModal onClose={() => closeModal()} />}
         </Modal>
       )}
     </Layout>

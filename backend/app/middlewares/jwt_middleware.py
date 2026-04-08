@@ -1,17 +1,20 @@
 from jose import jwt, JWTError
-from fastapi import Depends, HTTPException
+from fastapi import Cookie, HTTPException
 from app.core.security import oauth2_scheme
 from app.core.config import settings
 
 # Función para verificar el token en todas las solicitudes protegidas
-async def verify_jwt(token: str = Depends(oauth2_scheme)):
+async def verify_jwt(access_token: str = Cookie(None)):
     credentials_exception = HTTPException(
         status_code=401,
         detail="Token inválido o expirado",
-        headers={"WWW-Authenticate": "Bearer"},
     )
 
+    if not access_token:
+        raise credentials_exception
+
     try:
+        token = access_token.replace("Bearer ", "")
         payload = jwt.decode(
             token,
             settings.SECRET_KEY,
@@ -24,11 +27,10 @@ async def verify_jwt(token: str = Depends(oauth2_scheme)):
         if not user_id or not role:
             raise credentials_exception
 
-    except JWTError as e:
-        print("error", {e})
+    except JWTError:
         raise credentials_exception
-    
-    return{
+
+    return {
         "user_id": user_id,
         "role": role
     }

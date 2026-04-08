@@ -5,17 +5,19 @@ import { useUsers } from "./hooks/useUsers";
 import { usersIcons } from "../../assets/icons/mainIcons";
 // Modales
 import Modal from "../../globals/components/modals/Modal";
-import FilterUserModal from "./components/modals/FilterUserModal";
-import ProfileModal from "../../globals/components/modals/ProfileModal";
-import MoreInfoModal from "./components/modals/MoreInfoModal";
-import EditUserInfoModal from "./components/modals/EditUserInfoModal";
-import DeleteUserModal from "./components/modals/DeleteUserModal";
 import AddUserModal from "./components/modals/AddUserModal";
+import MoreInfoModal from "./components/modals/MoreInfoModal";
+import HelpModal from "../../globals/components/modals/HelpModal";
+import FilterUserModal from "./components/modals/FilterUserModal";
+import DisableUserModal from "./components/modals/DisableUserModal";
+import EditUserInfoModal from "./components/modals/EditUserInfoModal";
+import ProfileModal from "../../globals/components/modals/profileModal/ProfileModal";
 // Componentes
-import Layout from "../../globals/components/Layout/Layout";
-import TopSection from "../../globals/components/ui/TopSection";
-import SearchBar from "../../globals/components/ui/SearchBar";
 import UsersList from "./components/ui/UsersList";
+import Layout from "../../globals/components/Layout/Layout";
+import SearchBar from "../../globals/components/ui/SearchBar";
+import TopSection from "../../globals/components/ui/TopSection";
+import EnableUserModal from "./components/modals/EnableUserModal";
 
 export default function UsersPage() {
   // Traer todos los datos o states de sus hooks
@@ -23,7 +25,12 @@ export default function UsersPage() {
   const { users, loading, error, fetchUsers } = useUsers();
 
   return (
-    <Layout avatarOnClick={() => openModal(null, "user")}>
+    <Layout
+      avatarOnClick={() => openModal(null, "user")}
+      helpOnClick={() => {
+        openModal(null, "help");
+      }}
+    >
       <TopSection
         sectionName={"Usuarios"}
         addButtonIcon={usersIcons.addUserIcon}
@@ -57,18 +64,21 @@ export default function UsersPage() {
                     ? "Información del usuario"
                     : modalType === "edit"
                       ? "Editar usuario"
-                      : "Eliminar usuario"
+                      : modalType === "disable"
+                        ? "Deshabilitar usuario"
+                        : modalType === "enable"
+                          ? "Habilitar usuario"
+                          : "Ayuda"
           }
           type={modalType}
           isOpen={isOpen}
           onClose={() => closeModal()}
         >
-          {modalType === "user" && (
-            <ProfileModal onClose={() => closeModal()} />
-          )}
+          {modalType === "user" && <ProfileModal />}
           {modalType === "filter" && (
             <FilterUserModal onClose={() => closeModal()} />
           )}
+          {modalType === "help" && <HelpModal onClose={() => closeModal()} />}
           {/* Modal para agregar un usuario */}
           {modalType === "add" && (
             <AddUserModal onClose={() => closeModal()} openModal={openModal} />
@@ -81,9 +91,13 @@ export default function UsersPage() {
             <EditUserInfoModal user={modalData} onClose={() => closeModal()} />
           )}
 
-          {/* Modal para eliminar el usuario */}
-          {modalType === "delete" && (
-            <DeleteUserModal user={modalData} onClose={() => closeModal()} />
+          {/* Modal para deshabilitar el usuario */}
+          {modalType === "disable" && (
+            <DisableUserModal user={modalData} onClose={() => closeModal()} />
+          )}
+          {/* Modal para habilitar el usuario */}
+          {modalType === "enable" && (
+            <EnableUserModal user={modalData} onClose={() => closeModal()} />
           )}
         </Modal>
       )}

@@ -16,7 +16,8 @@ import SubcategoriesReport from "./components/ui/reports/subcategories/Subcatego
 import TransformationsReport from "./components/ui/reports/transformations/TransformationsReport";
 // Modales
 import Modal from "../../globals/components/modals/Modal";
-import ProfileModal from "../../globals/components/modals/ProfileModal";
+import HelpModal from "../../globals/components/modals/HelpModal";
+import ProfileModal from "../../globals/components/modals/profileModal/ProfileModal";
 
 export default function ReportsPage() {
   const [topSectionVisiblity, setTopSectionVisiblity] = useState(true);
@@ -24,7 +25,12 @@ export default function ReportsPage() {
   const { modalType, isOpen, openModal, closeModal } = useModal();
 
   return (
-    <Layout avatarOnClick={() => openModal(null, "user")}>
+    <Layout
+      avatarOnClick={() => openModal(null, "user")}
+      helpOnClick={() => {
+        openModal(null, "help");
+      }}
+    >
       <TopSection
         sectionVisible={topSectionVisiblity}
         sectionName={"Informes"}
@@ -39,60 +45,28 @@ export default function ReportsPage() {
         />
       )}
       {/* Contenido principal dinamico */}
-      {report === "users" && (
-        <UsersReport
-          setReport={setReport}
-          setTopSectionVisiblity={setTopSectionVisiblity}
-        />
-      )}
-      {report === "products" && (
-        <ProductsReport
-          setReport={setReport}
-          setTopSectionVisiblity={setTopSectionVisiblity}
-        />
-      )}
-      {report === "categories" && (
-        <CategoriesReport
-          setReport={setReport}
-          setTopSectionVisiblity={setTopSectionVisiblity}
-        />
-      )}
+      {report === "users" && <UsersReport setReport={setReport} />}
+      {report === "products" && <ProductsReport setReport={setReport} />}
+      {report === "categories" && <CategoriesReport setReport={setReport} />}
       {report === "subcategories" && (
-        <SubcategoriesReport
-          setReport={setReport}
-          setTopSectionVisiblity={setTopSectionVisiblity}
-        />
+        <SubcategoriesReport setReport={setReport} />
       )}
-      {report === "warranties" && (
-        <WarrantiesReport
-          setReport={setReport}
-          setTopSectionVisiblity={setTopSectionVisiblity}
-        />
-      )}
-      {report === "suppliers" && (
-        <SuppliersReport
-          setReport={setReport}
-          setTopSectionVisiblity={setTopSectionVisiblity}
-        />
-      )}
+      {report === "warranties" && <WarrantiesReport setReport={setReport} />}
+      {report === "suppliers" && <SuppliersReport setReport={setReport} />}
       {report === "transformations" && (
-        <TransformationsReport
-          setReport={setReport}
-          setTopSectionVisiblity={setTopSectionVisiblity}
-        />
+        <TransformationsReport setReport={setReport} />
       )}
 
       {/* Modales */}
       {modalType && (
         <Modal
-          title={modalType === "user" ? "Configuración" : ""}
+          title={modalType === "user" ? "Configuración" : "Ayuda"}
           type={modalType}
           isOpen={isOpen}
           onClose={() => closeModal()}
         >
-          {modalType === "user" && (
-            <ProfileModal onClose={() => closeModal()} />
-          )}
+          {modalType === "user" && <ProfileModal />}
+          {modalType === "help" && <HelpModal onClose={() => closeModal()} />}
         </Modal>
       )}
     </Layout>

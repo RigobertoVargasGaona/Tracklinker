@@ -10,9 +10,10 @@ import CategoriesList from "./components/ui/CategoriesList";
 // Modales
 import Modal from "../../globals/components/modals/Modal";
 import MoreInfoModal from "./components/modals/MoreInfoModal";
+import HelpModal from "../../globals/components/modals/HelpModal";
 import AddCategoryModal from "./components/modals/AddCategoryModal";
 import FilterModal from "../../globals/components/modals/FilterModal";
-import ProfileModal from "../../globals/components/modals/ProfileModal";
+import ProfileModal from "../../globals/components/modals/profileModal/ProfileModal";
 import DeleteCategoryModal from "./components/modals/DeleteCategoryModal";
 import EditCategoryInfoModal from "./components/modals/EditCategoryInfoModal";
 
@@ -21,7 +22,12 @@ export default function CategoriesPage() {
   const { modalType, isOpen, modalData, openModal, closeModal } = useModal();
 
   return (
-    <Layout avatarOnClick={() => openModal(null, "user")}>
+    <Layout
+      avatarOnClick={() => openModal(null, "user")}
+      helpOnClick={() => {
+        openModal(null, "help");
+      }}
+    >
       <TopSection
         sectionName={"Categorias"}
         addButtonIcon={actionsIcons.addIcon}
@@ -48,22 +54,23 @@ export default function CategoriesPage() {
                 ? "Agregar Categoria"
                 : modalType === "user"
                   ? "Configuración"
-                  : modalType === "info"
-                    ? "Información de la categoría"
-                    : modalType === "edit"
-                      ? "Editar Categoria"
-                      : "Eliminar Categoria"
+                  : modalType === "help"
+                    ? "Ayuda"
+                    : modalType === "info"
+                      ? "Información de la categoría"
+                      : modalType === "edit"
+                        ? "Editar Categoria"
+                        : "Eliminar Categoria"
           }
           type={modalType}
           isOpen={isOpen}
           onClose={() => closeModal()}
         >
-          {modalType === "user" && (
-            <ProfileModal onClose={() => closeModal()} />
-          )}
+          {modalType === "user" && <ProfileModal />}
           {modalType === "filter" && (
             <FilterModal onClose={() => closeModal()}></FilterModal>
           )}
+          {modalType === "help" && <HelpModal onClose={() => closeModal()} />}
           {modalType === "add" && (
             <AddCategoryModal onClose={() => closeModal()} />
           )}
